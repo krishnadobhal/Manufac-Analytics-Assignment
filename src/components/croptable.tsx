@@ -3,9 +3,16 @@ import React, { useState } from "react";
 
 const extractYear = (input: string): string => {
   const match = input.match(/(\d{4})$/); // Match the last 4 digits
-  return match ? match[1] : ""; // Return the year if matched, else return an empty string
+  return match ? match[1] : ""; 
 };
 
+/**
+ * Processes crop data to summarize the maximum and minimum crop production for each year.
+ *
+ * @param cropdata[] - Array of crop data objects containing crop names and yield information
+ * @returns {Array<{}>} An array of objects summarizing the maximum and minimum crop production for each year.
+ *
+ */
 const processCropData = (cropdata:datas[]) => {
   const yearSummary: Record<
     string,
@@ -15,6 +22,7 @@ const processCropData = (cropdata:datas[]) => {
     }
   > = {};
 
+  // Processes crop data to find max and min production for each year and returns a summary array 
   cropdata.forEach((crop) => {
     const year = extractYear(crop.Year);
     const production = crop["Crop Production (UOM:t(Tonnes))"];
@@ -61,6 +69,13 @@ interface CropData {
       "Area Under Cultivation (UOM:Ha(Hectares))": number;
   }[];
 }
+
+/**
+ * CropTable component to display the maximum and minimum crop production for each year.
+ * 
+ * @param cropdata - Array of crop data objects containing crop names and yield information
+ * @returns JSX.Element- A Table representing the maximum and minimum crop production for each year
+ */
 
 const CropTable:React.FC<CropData>= ({datas}) => {
   const data = datas;

@@ -2,10 +2,17 @@ import React,{ useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 
 
+/**
+ * Aggregates crop data to calculate average yield per crop.
+ * 
+ * @param cropdata[] - Array of crop data objects containing crop names and yield information
+ * @returns Array of objects containing crop names and their average yields
+ */
 const aggregateCropData = (cropdata:datas[]) => {
     const cropSummary: Record<string, { totalYield: number; count: number }> = {};
 
     cropdata.forEach((crop) => {
+        // Extract the crop name and production yield from the current crop object
         const cropName = crop["Crop Name"];
         const production = crop["Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))"];
 
@@ -24,10 +31,11 @@ const aggregateCropData = (cropdata:datas[]) => {
         averageYield: totalYield / count,
     }));
 };
+// Truncates a crop name to a specified maximum length.
 const truncateCropName = (name: string, maxLength: number) => {
     return name.length > maxLength ? name.slice(0, maxLength) + '...' : name;
 };
- 
+
 interface datas {
     Country: string;
     Year: string;
@@ -47,8 +55,14 @@ interface CropData {
         "Area Under Cultivation (UOM:Ha(Hectares))": number;
     }[];
 }
-// const Click: React.FC<CLickprops> = ({ id }) =>
-const BarChart:React.FC<CropData> = ({datas}) => {
+
+/**
+ * BarChart component to display average crop yield in a bar chart.
+ * 
+ * @param cropdata - Array of crop data objects containing crop names and yield information
+ * @returns JSX.Element- A bar chart representing the average yield per crop
+ */
+const BarChart: React.FC<CropData> = ({ datas }) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const [chartData, setChartData] = useState<{ crop: string; averageYield: number }[]>([]);
 
@@ -85,7 +99,6 @@ const BarChart:React.FC<CropData> = ({datas}) => {
 
             chartInstance.setOption(option);
 
-            // Cleanup function to dispose of the chart instance
             return () => {
                 chartInstance.dispose();
             };
