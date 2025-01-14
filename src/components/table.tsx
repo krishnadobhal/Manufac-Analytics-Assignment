@@ -1,13 +1,12 @@
 import { Table, Pagination } from "@mantine/core";
-import { useState } from "react";
-import cropdata from "../Manufac _ India Agro Dataset.json";
+import React, { useState } from "react";
 
 const extractYear = (input: string): string => {
   const match = input.match(/(\d{4})$/); // Match the last 4 digits
   return match ? match[1] : ""; // Return the year if matched, else return an empty string
 };
 
-const processCropData = () => {
+const processCropData = (cropdata:datas[]) => {
   const yearSummary: Record<
     string,
     {
@@ -43,10 +42,31 @@ const processCropData = () => {
   }));
 };
 
-const CropTable = () => {
-  const tableData = processCropData();
+interface datas {
+  Country: string;
+  Year: string;
+  "Crop Name": string;
+  "Crop Production (UOM:t(Tonnes))": number;
+  "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
+  "Area Under Cultivation (UOM:Ha(Hectares))": number;
+}
+
+interface CropData {
+  datas: {
+      Country: string;
+      Year: string;
+      "Crop Name": string;
+      "Crop Production (UOM:t(Tonnes))": number;
+      "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
+      "Area Under Cultivation (UOM:Ha(Hectares))": number;
+  }[];
+}
+
+const CropTable:React.FC<CropData>= ({datas}) => {
+  const data = datas;
+  const tableData = processCropData(data);
   const [activePage, setPage] = useState(1);
-  const rowsPerPage = 15;
+  const rowsPerPage = 9;
 
   const rows = tableData
     .slice((activePage - 1) * rowsPerPage, activePage * rowsPerPage)
