@@ -1,5 +1,6 @@
 import React,{ useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
+import { CropData, datas } from '../types/interface';
 
 
 /**
@@ -36,26 +37,6 @@ const truncateCropName = (name: string, maxLength: number) => {
     return name.length > maxLength ? name.slice(0, maxLength) + '...' : name;
 };
 
-interface datas {
-    Country: string;
-    Year: string;
-    "Crop Name": string;
-    "Crop Production (UOM:t(Tonnes))": number;
-    "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
-    "Area Under Cultivation (UOM:Ha(Hectares))": number;
-}
-
-interface CropData {
-    datas: {
-        Country: string;
-        Year: string;
-        "Crop Name": string;
-        "Crop Production (UOM:t(Tonnes))": number;
-        "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
-        "Area Under Cultivation (UOM:Ha(Hectares))": number;
-    }[];
-}
-
 /**
  * BarChart component to display average crop yield in a bar chart.
  * 
@@ -87,6 +68,7 @@ const BarChart: React.FC<CropData> = ({ datas }) => {
                 yAxis: {
                     type: 'value',
                     name: 'Average Yield (Kg/Ha)',
+                    max:6000,
                 },
                 series: [
                     {
@@ -105,7 +87,7 @@ const BarChart: React.FC<CropData> = ({ datas }) => {
         }
     }, [chartData]);
 
-    return <div ref={chartRef} style={{ width: '100%', height: '42vh' }} />;
+    return <div ref={chartRef} style={{ marginLeft:"10px",width: '90%', height: '42vh' }} />;
 };
 
 export default BarChart;

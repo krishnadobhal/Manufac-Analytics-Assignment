@@ -1,5 +1,6 @@
 import { Table, Pagination } from "@mantine/core";
 import React, { useState } from "react";
+import { CropData, datas } from "../types/interface";
 
 const extractYear = (input: string): string => {
   const match = input.match(/(\d{4})$/); // Match the last 4 digits
@@ -50,25 +51,7 @@ const processCropData = (cropdata:datas[]) => {
   }));
 };
 
-interface datas {
-  Country: string;
-  Year: string;
-  "Crop Name": string;
-  "Crop Production (UOM:t(Tonnes))": number;
-  "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
-  "Area Under Cultivation (UOM:Ha(Hectares))": number;
-}
 
-interface CropData {
-  datas: {
-      Country: string;
-      Year: string;
-      "Crop Name": string;
-      "Crop Production (UOM:t(Tonnes))": number;
-      "Yield Of Crops (UOM:Kg/Ha(KilogramperHectare))": number|string;
-      "Area Under Cultivation (UOM:Ha(Hectares))": number;
-  }[];
-}
 
 /**
  * CropTable component to display the maximum and minimum crop production for each year.
