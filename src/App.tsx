@@ -2,9 +2,9 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import CropTable from "./components/croptable";
-import BarChart from "./components/BarChart";
+import BarChart from "./components/CropbarChart";
 import cropdata from "./assets/Manufac _ India Agro Dataset.json";
-import { datas } from "./types/interface";
+import { CropEntry } from "./types/interface";
 
 
 
@@ -13,7 +13,7 @@ import { datas } from "./types/interface";
  * @returns JSX.Element
  */
 export default function App() {
-  const data: datas[] = cropdata as datas[];
+  const data: CropEntry[] = cropdata as CropEntry[];
 
   return (
     <MantineProvider theme={theme}>

@@ -1,6 +1,6 @@
 import React,{ useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
-import { CropData, datas } from '../types/interface';
+import { CropDataCollection, CropEntry } from '../types/interface';
 
 
 /**
@@ -9,7 +9,7 @@ import { CropData, datas } from '../types/interface';
  * @param cropdata[] - Array of crop data objects containing crop names and yield information
  * @returns Array of objects containing crop names and their average yields
  */
-const aggregateCropData = (cropdata:datas[]) => {
+const aggregateCropData = (cropdata:CropEntry[]) => {
     const cropSummary: Record<string, { totalYield: number; count: number }> = {};
 
     cropdata.forEach((crop) => {
@@ -43,7 +43,7 @@ const truncateCropName = (name: string, maxLength: number) => {
  * @param cropdata - Array of crop data objects containing crop names and yield information
  * @returns JSX.Element- A bar chart representing the average yield per crop
  */
-const BarChart: React.FC<CropData> = ({ datas }) => {
+const BarChart: React.FC<CropDataCollection> = ({ datas }) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const [chartData, setChartData] = useState<{ crop: string; averageYield: number }[]>([]);
 

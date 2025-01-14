@@ -1,6 +1,6 @@
 import { Table, Pagination } from "@mantine/core";
 import React, { useState } from "react";
-import { CropData, datas } from "../types/interface";
+import { CropDataCollection, CropEntry } from "../types/interface";
 
 const extractYear = (input: string): string => {
   const match = input.match(/(\d{4})$/); // Match the last 4 digits
@@ -14,7 +14,7 @@ const extractYear = (input: string): string => {
  * @returns {Array<{}>} An array of objects summarizing the maximum and minimum crop production for each year.
  *
  */
-const processCropData = (cropdata:datas[]) => {
+const processCropData = (cropdata:CropEntry[]) => {
   const yearSummary: Record<
     string,
     {
@@ -60,7 +60,7 @@ const processCropData = (cropdata:datas[]) => {
  * @returns JSX.Element- A Table representing the maximum and minimum crop production for each year
  */
 
-const CropTable:React.FC<CropData>= ({datas}) => {
+const CropTable:React.FC<CropDataCollection>= ({datas}) => {
   const data = datas;
   const tableData = processCropData(data);
   const [activePage, setPage] = useState(1);
